@@ -38,3 +38,32 @@
     Many model forms describe the underlying impact of features relative to each other.
     Decision Tree models and Random Forest in scikit-learn, feature_importances_ attribute when fitted.
     Utilized this attribute to rank and plot the features.
+
+## Future Advancements
+
+### Flexible Churn Prediction System
+
+#### Proposed Enhancements:
+1. **Interactive Data Input Module**
+   - Dynamic employee data entry
+   - Real-time churn probability calculation
+   - Flexible input fields
+
+2. **Command-Line Interface (CLI) Improvements**
+   - Option to use default or custom datasets
+   - Multiple data input modes
+   - Instant prediction generation
+
+3. **Advanced Prediction Features**
+   - Batch employee data processing
+   - Detailed risk assessment
+   - Personalized retention recommendations
+
+4. **Potential Implementation**
+   - Modify existing ML pipeline
+   - Create flexible data loading mechanism
+   - Implement input validation
+   - Integrate with current machine learning models
+
+#### Vision
+Transform the current model into a comprehensive, user-friendly employee retention prediction tool that can adapt to various organizational needs.
