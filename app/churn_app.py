@@ -1,69 +1,49 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 import pickle
+import os
+from pathlib import Path
 
-# Get the directory of the current file
-current_dir = os.path.dirname(__file__)
-model_path = os.path.join(current_dir, 'churn_model.pkl')
+# Safe path handling for both local and Streamlit Cloud
+current_dir = Path(__file__).parent if '__file__' in globals() else Path.cwd()
+model_path = current_dir / 'churn_model.pkl'
 
 # Load the trained model
-with open('churn_model.pkl', 'rb') as file:
+with open(model_path, 'rb') as file:
     model = pickle.load(file)
 
-# Title
-st.title("Employee Churn Prediction App")
+# Streamlit App Title
+st.title("Customer Churn Prediction App")
 
-# Input fields for user
-st.subheader("Fill in the employee details below to predict whether they are likely to leave the company.")
+# Collect user inputs
+gender = st.selectbox("Gender", ["Male", "Female"])
+SeniorCitizen = st.selectbox("Senior Citizen", [0, 1])
+Partner = st.selectbox("Has Partner", ["Yes", "No"])
+Dependents = st.selectbox("Has Dependents", ["Yes", "No"])
+tenure = st.slider("Tenure (months)", 0, 72, 12)
+PhoneService = st.selectbox("Phone Service", ["Yes", "No"])
+InternetService = st.selectbox("Internet Service", ["DSL", "Fiber optic", "No"])
+MonthlyCharges = st.number_input("Monthly Charges", min_value=0.0, max_value=500.0, value=50.0)
+TotalCharges = st.number_input("Total Charges", min_value=0.0, max_value=10000.0, value=500.0)
 
-satisfaction_level = st.slider("Satisfaction Level", 0.0, 1.0, 0.5)
-last_evaluation = st.slider("Last Evaluation Score", 0.0, 1.0, 0.5)
-number_project = st.number_input("Number of Projects", min_value=1, max_value=10, value=3)
-average_montly_hours = st.number_input("Average Monthly Hours", min_value=80, max_value=400, value=160)
-time_spend_company = st.number_input("Years at Company", min_value=1, max_value=10, value=3)
-
-work_accident = st.selectbox("Had Work Accident?", ["No", "Yes"])
-promotion_last_5years = st.selectbox("Promotion in Last 5 Years?", ["No", "Yes"])
-department = st.selectbox("Department", ["IT", "RandD", "Accounting", "HR", "Management", "Marketing", "Product_mng", "Sales", "Support", "Technical"])
-salary = st.selectbox("Salary Level", ["low", "medium", "high"])
-
-# Preprocessing
-work_accident = 1 if work_accident == "Yes" else 0
-promotion_last_5years = 1 if promotion_last_5years == "Yes" else 0
-
-# Map department
-dept_mapping = {
-    "IT": "technical",
-    "RandD": "RandD",
-    "Accounting": "accounting",
-    "HR": "hr",
-    "Management": "management",
-    "Marketing": "marketing",
-    "Product_mng": "product_mng",
-    "Sales": "sales",
-    "Support": "support",
-    "Technical": "technical"
-}
-
-department = dept_mapping.get(department, "technical")
-
-# Create DataFrame for prediction
+# Convert inputs into a DataFrame
 input_data = pd.DataFrame({
-    'satisfaction_level': [satisfaction_level],
-    'last_evaluation': [last_evaluation],
-    'number_project': [number_project],
-    'average_montly_hours': [average_montly_hours],
-    'time_spend_company': [time_spend_company],
-    'Work_accident': [work_accident],
-    'promotion_last_5years': [promotion_last_5years],
-    'department': [department],
-    'salary': [salary]
+    "gender": [gender],
+    "SeniorCitizen": [SeniorCitizen],
+    "Partner": [Partner],
+    "Dependents": [Dependents],
+    "tenure": [tenure],
+    "PhoneService": [PhoneService],
+    "InternetService": [InternetService],
+    "MonthlyCharges": [MonthlyCharges],
+    "TotalCharges": [TotalCharges]
 })
 
-# Predict
+# Prediction
 if st.button("Predict Churn"):
-    prediction = model.predict(input_data)
-    if prediction[0] == 1:
-        st.error("⚠️ The employee is likely to leave the company.")
+    prediction = model.predict(input_data)[0]
+    if prediction == 1:
+        st.error("The customer is likely to churn.")
     else:
-        st.success("✅ The employee is likely to stay in the company.")
+        st.success("The customer is not likely to churn.")
