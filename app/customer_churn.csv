@@ -1,0 +1,11 @@
+CustomerID,Gender,Age,Tenure,MonthlyCharges,TotalCharges,Contract,PaymentMethod,Churn
+1001,Male,45,12,70.5,846.0,Month-to-month,Credit card,Yes
+1002,Female,34,24,88.0,2112.0,Two year,Bank transfer,No
+1003,Male,29,5,45.0,225.0,Month-to-month,Electronic check,Yes
+1004,Female,50,36,99.0,3564.0,Two year,Credit card,No
+1005,Male,40,18,75.0,1350.0,One year,Electronic check,No
+1006,Female,31,6,65.0,390.0,Month-to-month,Electronic check,Yes
+1007,Male,28,2,55.0,110.0,Month-to-month,Bank transfer,Yes
+1008,Female,37,30,80.0,2400.0,Two year,Credit card,No
+1009,Male,44,10,72.0,720.0,One year,Credit card,No
+1010,Female,26,1,50.0,50.0,Month-to-month,Electronic check,Yes
