@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Churn Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f4f6;
+            padding: 30px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            max-width: 700px;
+            margin: auto;
+            background: #ffffff;
+            padding: 25px 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .form-item {
+            flex: 0 0 48%;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: #444;
+            font-weight: 600;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px 10px;
+            font-size: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto 0;
+        }
+        .result {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+        }
+
+        @media (max-width: 600px) {
+            .form-item {
+                flex: 0 0 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<h2>Employee Churn Prediction</h2>
+
+<form method="POST" action="/predict">
+    <div class="form-group">
+        <div class="form-item">
+            <label>Satisfaction Level:</label>
+            <input type="number" name="satisfaction_level" step="0.01" required>
+        </div>
+        <div class="form-item">
+            <label>Last Evaluation:</label>
+            <input type="number" name="last_evaluation" step="0.01" required>
+        </div>
+        <div class="form-item">
+            <label>Number of Projects:</label>
+            <input type="number" name="number_project" required>
+        </div>
+        <div class="form-item">
+            <label>Avg Monthly Hours:</label>
+            <input type="number" name="average_monthly_hours" required>
+        </div>
+        <div class="form-item">
+            <label>Time Spent in Company:</label>
+            <input type="number" name="time_spend_company" required>
+        </div>
+        <div class="form-item">
+            <label>Work Accident (0 or 1):</label>
+            <input type="number" name="work_accident" min="0" max="1" required>
+        </div>
+        <div class="form-item">
+            <label>Promotion in Last 5 Years (0 or 1):</label>
+            <input type="number" name="promotion_last_5years" min="0" max="1" required>
+        </div>
+        <div class="form-item">
+            <label>Department:</label>
+            <select name="department" required>
+                <option value="sales">Sales</option>
+                <option value="technical">Technical</option>
+                <option value="support">Support</option>
+                <option value="IT">IT</option>
+                <option value="product_mng">Product Management</option>
+                <option value="marketing">Marketing</option>
+                <option value="RandD">R&D</option>
+                <option value="accounting">Accounting</option>
+                <option value="hr">HR</option>
+                <option value="management">Management</option>
+            </select>
+        </div>
+        <div class="form-item">
+            <label>Salary:</label>
+            <select name="salary" required>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+        </div>
+    </div>
+
+    <button type="submit">Predict</button>
+
+    {% if result %}
+        <div class="result">{{ result }}</div>
+    {% endif %}
+    {% if error %}
+        <div class="result error">{{ error }}</div>
+    {% endif %}
+</form>
+
+</body>
+</html>
