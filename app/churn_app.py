@@ -2,6 +2,10 @@ import streamlit as st
 import pandas as pd
 import pickle
 
+# Get the directory of the current file
+current_dir = os.path.dirname(__file__)
+model_path = os.path.join(current_dir, 'churn_model.pkl')
+
 # Load the trained model
 with open('churn_model.pkl', 'rb') as file:
     model = pickle.load(file)
