@@ -1,0 +1,7 @@
+﻿# Ignore environment and temp files
+churn_prediction/
+*.pyc
+__pycache__/
+*.log
+.ipynb_checkpoints/
+*.png
